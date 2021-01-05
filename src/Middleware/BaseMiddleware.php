@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Chive\Middleware;
 
-use App\Helper\BaseHelper;
+use Chive\Helper\BaseHelper;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface as HttpResponse;

@@ -2,8 +2,8 @@
 namespace  Chive\Helper\Mongo;
 
 
-use App\Helper\Mongo\Exception\MongoDBException;
-use App\Helper\Mongo\Pool\PoolFactory;
+use Chive\Helper\Mongo\Exception\MongoDBException;
+use Chive\Helper\Mongo\Pool\PoolFactory;
 use Hyperf\Utils\Context;
 
 /**

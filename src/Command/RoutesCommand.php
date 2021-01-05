@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace Chive\Command;
 
-use App\Annotation\ClassRoute;
-use App\Annotation\MethodRoute;
-use App\Annotation\Route;
-use App\Annotation\RouteMiddleware;
-use App\Controller\CeshiController;
+use Chive\Annotation\ClassRoute;
+use Chive\Annotation\MethodRoute;
 use Hyperf\Command\Command as HyperfCommand;
 use Hyperf\Command\Annotation\Command;
 use Hyperf\Di\Annotation\AnnotationCollector;

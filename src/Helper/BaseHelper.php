@@ -2,8 +2,7 @@
 
 namespace Chive\Helper;
 
-use App\Controller\AbstractController;
-use App\Exception\BusinessException;
+use Chive\Controller\AbstractController;
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ServerRequestInterface;
 use Throwable;

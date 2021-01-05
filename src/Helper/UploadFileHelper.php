@@ -10,11 +10,6 @@
 
 namespace Chive\Helper;
 
-use App\Dao\FileDao;
-use App\Exception\BusinessException;
-use App\Service\FileService;
-use App\Service\FolderService;
-use App\Service\UserService;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Psr\Log\LogLevel;

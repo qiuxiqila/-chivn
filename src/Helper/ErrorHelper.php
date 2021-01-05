@@ -2,7 +2,6 @@
 
 namespace Chive\Helper;
 
-use App\Exception\BusinessException;
 use Throwable;
 
 /**

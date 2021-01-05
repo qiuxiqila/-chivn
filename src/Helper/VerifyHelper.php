@@ -2,7 +2,7 @@
 
 namespace Chive\Helper;
 
-use App\Exception\BusinessException;
+use Chive\Exception\BusinessException;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
 

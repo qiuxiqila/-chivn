@@ -1,6 +1,6 @@
 {
   "name": "souyou985/chive",
-  "description": "学习交流",
+  "description": "学习交流,hyperf工具类",
   "type": "library",
   "require": {
   },
