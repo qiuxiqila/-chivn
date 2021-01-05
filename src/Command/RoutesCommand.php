@@ -6,6 +6,7 @@ namespace Chive\Command;
 
 use Chive\Annotation\ClassRoute;
 use Chive\Annotation\MethodRoute;
+use Chive\Annotation\WebsocketRoute;
 use Hyperf\Command\Command as HyperfCommand;
 use Hyperf\Command\Annotation\Command;
 use Hyperf\Di\Annotation\AnnotationCollector;
@@ -52,8 +53,11 @@ class RoutesCommand extends HyperfCommand
     public function handle()
     {
         $this->line('开始生成路由文件...', 'info');
-        $routeArr = $this->readClassRoute();
-        $this->createRouteFile($routeArr);
+        $routeArr     = $this->readClassRoute();
+        $httpStr      = $this->createHttpRouteFileString($routeArr);
+        $websocketStr = $this->createWebsocketRouteFileString();
+
+        file_put_contents('runtime/a.php', $httpStr . $websocketStr);
         $this->line('生成路由完成', 'info');
     }
 
@@ -106,9 +110,11 @@ class RoutesCommand extends HyperfCommand
                     }
                     $pathArr[] = $pathName;
                 }
-                $prefix = implode("/", $pathArr);
+                $prefix = '/' . implode("/", $pathArr);
             }
-            $prefix = $prefix . '/';
+            if ($prefix != '/') {
+                $prefix = $prefix . '/';
+            }
 
             // 请求方法, 默认只有POST
             if (empty($classRoute->methods)) {
@@ -186,7 +192,7 @@ class RoutesCommand extends HyperfCommand
      * 创建路由文件
      * @param $routeArr
      */
-    public function createRouteFile($routeArr)
+    public function createHttpRouteFileString($routeArr)
     {
         $header = "<?php
 declare(strict_types=1);
@@ -228,18 +234,42 @@ Router::get('/favicon.ico', function () {
                     $str .= ");" . PHP_EOL;
                 }
                 if (!empty($group['middleware'])) {
-                    $str .= "}, ['middleware' => [{$group['middleware']}::class]]);" . PHP_EOL;
+                    $str .= $t . "}, ['middleware' => [{$group['middleware']}::class]]);" . PHP_EOL;
                 } else {
-                    $str .= "});" . PHP_EOL;
+                    $str .= $t . "});" . PHP_EOL;
                 }
-                $str .= PHP_EOL;
+                if ($server == 'http') {
+                    $str .= PHP_EOL;
+                }
             }
             if ($server != 'http') {
                 $str .= "});" . PHP_EOL;
             }
         }
 
-        file_put_contents('runtime/a.php', $header . $str);
+        return $header . $str . PHP_EOL;
+    }
+
+    /**
+     * 读websocket路由配置
+     */
+    public function createWebsocketRouteFileString()
+    {
+        $classList = AnnotationCollector::getClassesByAnnotation(WebsocketRoute::class);
+        if (empty($classList)) {
+            return '';
+        }
+        $str = '';
+        /**
+         * @var string         $className
+         * @var WebsocketRoute $websocketRoute
+         */
+        foreach ($classList as $className => $websocketRoute) {
+            $str .= "Router::addServer('{$websocketRoute->server}', function () {
+    Router::get('/', '{$className}');
+});" . PHP_EOL;
+        }
+        return $str;
     }
 
 }
