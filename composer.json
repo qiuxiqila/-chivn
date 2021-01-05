@@ -3,9 +3,6 @@
   "description": "学习交流",
   "type": "library",
   "require": {
-    "firebase/php-jwt": "dev-master",
-    "gregwar/captcha": "dev-master",
-    "wuxian/sgame-rbac": "dev-main"
   },
   "license": "MIT",
   "authors": [
