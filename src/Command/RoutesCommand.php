@@ -17,11 +17,6 @@ use Psr\Container\ContainerInterface;
  */
 class RoutesCommand extends HyperfCommand
 {
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
-
     /** @var array 生成路由需要忽略掉的方法 */
     static $ignoreMehtod = [
         '__construct',
@@ -36,6 +31,14 @@ class RoutesCommand extends HyperfCommand
         '__handlePropertyHandler',
         '__handle',
     ];
+
+    /** @var string 路由文件路径 */
+    protected $createPath = 'config/routes.php';
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     public function __construct(ContainerInterface $container)
     {
@@ -57,8 +60,17 @@ class RoutesCommand extends HyperfCommand
         $httpStr      = $this->createHttpRouteFileString($routeArr);
         $websocketStr = $this->createWebsocketRouteFileString();
 
-        file_put_contents('runtime/a.php', $httpStr . $websocketStr);
+        file_put_contents($this->createPath, $httpStr . $websocketStr . $this->extra());
         $this->line('生成路由完成', 'info');
+    }
+
+    /**
+     * 额外补充写入信息
+     * @return string
+     */
+    public function extra()
+    {
+        return '';
     }
 
     /**
