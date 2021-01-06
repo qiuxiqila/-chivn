@@ -61,15 +61,20 @@ class YApiMiddleware implements MiddlewareInterface
             if (!isset($dispatched) || !isset($dispatched->handler->callback)) {
                 return $handler->handle($request);
             }
-            $callback      = $dispatched->handler->callback;
-            $callbackArr   = explode("\\", $callback);
-            $controller    = array_pop($callbackArr);
-            $controllerArr = explode("@", $controller);
-            $controller    = $controllerArr[0];
+            if(is_array($dispatched->handler->callback)) {
+                $callbackArr   = explode("\\", $dispatched->handler->callback[0]);
+                $controller    = array_pop($callbackArr);
+            } else {
+                $callback      = $dispatched->handler->callback;
+                $callbackArr   = explode("\\", $callback);
+                $controller    = array_pop($callbackArr);
+                $controllerArr = explode("@", $controller);
+                $controller    = $controllerArr[0];
+            }
             $className     = substr($controller, 0, strlen($controller) - 10);
             $className     = self::humpToLine($className);
         }
-        $list = Db::select("SELECT `column_name`, `data_type`, `column_comment` FROM information_schema. COLUMNS WHERE `table_schema` = 'Y3-erp' AND `table_name` = '{$className}' ORDER BY ORDINAL_POSITION;");
+        $list = Db::select("SELECT `column_name`, `data_type`, `column_comment` FROM information_schema. COLUMNS WHERE `table_schema` = '".env('DB_DATABASE')."' AND `table_name` = '{$className}' ORDER BY ORDINAL_POSITION;");
 
         $commentList = [];
         /** @var \stdClass $commentObj */
