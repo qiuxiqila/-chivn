@@ -19,7 +19,7 @@ abstract class AbstractService
      * dao类
      * @var AbstractDao
      */
-    protected $abstractDao;
+    protected $dao;
 
     /**
      * 获取列表
@@ -28,7 +28,7 @@ abstract class AbstractService
      */
     public function getList($params)
     {
-        return $this->abstractDao->getList($params, [], true);
+        return $this->dao->getList($params, [], true);
     }
 
     /**
@@ -38,7 +38,7 @@ abstract class AbstractService
      */
     public function add($params)
     {
-        return $this->abstractDao->add($params);
+        return $this->dao->add($params);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class AbstractService
      */
     public function getOne($params)
     {
-        $data = $this->abstractDao->getOneArr($params);
+        $data = $this->dao->getOneArr($params);
         if (empty($data)) {
             throw new BusinessException(ErrorHelper::FAIL_CODE, '查询无记录');
         }
@@ -62,7 +62,7 @@ abstract class AbstractService
      */
     public function update($params)
     {
-        return $this->abstractDao->updateOne($params);
+        return $this->dao->updateOne($params);
     }
 
     /**
@@ -72,7 +72,7 @@ abstract class AbstractService
      */
     public function delete($params)
     {
-        $res = $this->abstractDao->delByPriKey($params[$this->dao->getPrimaryKey()]);
+        $res = $this->dao->delByPriKey($params[$this->dao->getPrimaryKey()]);
         if (!$res) {
             throw new BusinessException(ErrorHelper::FAIL_CODE, '删除失败');
         }
