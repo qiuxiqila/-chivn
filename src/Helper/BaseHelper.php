@@ -2,10 +2,8 @@
 
 namespace Chive\Helper;
 
-use Chive\Controller\AbstractController;
 use Hyperf\Utils\Context;
 use Psr\Http\Message\ServerRequestInterface;
-use Throwable;
 
 /**
  * 业务公共类

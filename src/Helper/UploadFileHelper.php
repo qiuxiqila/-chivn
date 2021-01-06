@@ -10,9 +10,8 @@
 
 namespace Chive\Helper;
 
-use Hyperf\Di\Annotation\Inject;
 use Hyperf\HttpServer\Contract\RequestInterface;
-use Psr\Log\LogLevel;
+
 
 class UploadFileHelper
 {

@@ -5,6 +5,7 @@ namespace Chive\Helper;
 use Chive\Exception\BusinessException;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Validation\Contract\ValidatorFactoryInterface;
+use Hyperf\Validation\ValidatorFactory;
 
 
 /**
@@ -14,10 +15,14 @@ class VerifyHelper
 {
 
     /**
-     * @Inject()
      * @var ValidatorFactoryInterface
      */
     protected $validationFactory;
+
+    public function __construct(ValidatorFactoryInterface $validationFactory)
+    {
+        $this->validationFactory = $validationFactory;
+    }
 
     /**
      * @param array $params  校验的数据

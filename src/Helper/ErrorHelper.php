@@ -2,7 +2,6 @@
 
 namespace Chive\Helper;
 
-use Throwable;
 
 /**
  * 业务code和方法类

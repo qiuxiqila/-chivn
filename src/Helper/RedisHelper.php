@@ -8,8 +8,6 @@
 
 namespace Chive\Helper;
 
-
-use Hyperf\Di\Annotation\Inject;
 use Hyperf\Utils\ApplicationContext;
 
 class RedisHelper
