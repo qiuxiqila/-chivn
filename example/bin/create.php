@@ -87,7 +87,7 @@ class Main
         self::createController($controllerDir, $className, $author, $mark, $date, $dir);
         self::createRequest(self::$requestDir, $className, $author, $mark, $date);
         self::createService(self::$serviceDir, $className, $author, $mark, $date);
-        self::appendRoutes(self::$routesPath, $className, $mark, $dir);
+        //self::appendRoutes(self::$routesPath, $className, $mark, $dir);
     }
 
     public static function createDao($dir, $className, $author, $mark, $date)
@@ -104,6 +104,7 @@ namespace App\Dao;
 
 use App\Model\\' . $className . ';
 use App\Model\Casts\TimeCasts;
+use Chive\Dao\AbstractDao;
 
 class ' . $className . 'Dao  extends AbstractDao
 {
@@ -218,8 +219,8 @@ class ' . $className . 'Request
 {
     // 列表
     const LIST_RULE = [
-        \'page_size\' => \'required|integer\',
-        \'page\'      => \'required|integer\',
+        \'page_size\' => \'required|integer\',      // 页大小
+        \'page\'      => \'required|integer\',      // 页数
     ];
 
     // 添加
@@ -229,7 +230,7 @@ class ' . $className . 'Request
 
     // 单条详情
     const ONE_RULE = [
-        \'id\' => \'required|integer\',
+        \'id\' => \'required|integer\',         // 表ID
     ];
 
     const MESSAGE = [
@@ -257,6 +258,7 @@ namespace App\Service;
 
 use App\Dao\\' . $className . 'Dao;
 use Hyperf\Di\Annotation\Inject;
+use Chive\Service\AbstractService;
 
 class ' . $className . 'Service extends AbstractService
 {
