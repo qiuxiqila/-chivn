@@ -22,6 +22,7 @@ use Psr\Http\Message\ResponseInterface;
 use Hyperf\Logger\LoggerFactory;
 use Throwable;
 use Wuxian\WebUtils\WebUtilsTrait;
+use Hyperf\HttpServer\Response;
 
 class BusinessExceptionHandler extends ExceptionHandler
 {
@@ -31,8 +32,7 @@ class BusinessExceptionHandler extends ExceptionHandler
     protected $container;
 
     /**
-     * @Inject()
-     * @var \Hyperf\HttpServer\Response
+     * @var Response
      */
     protected $response;
 
@@ -46,11 +46,12 @@ class BusinessExceptionHandler extends ExceptionHandler
      */
     protected $stdoutLogger;
 
-    public function __construct(ContainerInterface $container, LoggerFactory $loggerFactory, StdoutLoggerInterface $stdoutLogger)
+    public function __construct(ContainerInterface $container, LoggerFactory $loggerFactory, StdoutLoggerInterface $stdoutLogger, Response $response)
     {
         $this->container    = $container;
         $this->stdoutLogger = $stdoutLogger;
         $this->logger       = $loggerFactory->get('error', 'error');
+        $this->response     = $response;
     }
 
 
