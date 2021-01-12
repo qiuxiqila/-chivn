@@ -222,6 +222,14 @@ Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@i
 Router::get('/favicon.ico', function () {
     return '';
 });
+Router::get('/info', function () {
+    return [
+        'APP_NAME'    => env('APP_NAME'),
+        'APP_ENV'     => env('APP_ENV'),
+        'SERVER_DATE' => date('Y-m-d H:i:s', time()),
+        'SERVER_TIME' => time(),
+    ];
+});
 
 ";
         $str    = '';
