@@ -20,8 +20,8 @@ class TimeCasts implements CastsAttributes
      */
     public function get($model, string $key, $value, array $attributes)
     {
-        if(empty($value)) {
-            return $value;
+        if(empty($value) || !is_numeric($value)) {
+            return '';
         }
         return $this->getTimeString(intval($value));
     }

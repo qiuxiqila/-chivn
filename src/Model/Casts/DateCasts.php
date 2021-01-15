@@ -17,7 +17,7 @@ class DateCasts implements CastsAttributes
     public function get($model, string $key, $value, array $attributes)
     {
         if (empty($value) || !is_numeric($value)) {
-            return $value;
+            return '';
         }
         return date('Y/m/d', $value);
     }
