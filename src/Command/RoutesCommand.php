@@ -79,6 +79,7 @@ class RoutesCommand extends HyperfCommand
     public function readClassRoute()
     {
         $classList = AnnotationCollector::getClassesByAnnotation(ClassRoute::class);
+        ksort($classList);
 
         $routeArr = [];
         /**
