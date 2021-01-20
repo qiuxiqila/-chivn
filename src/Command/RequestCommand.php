@@ -152,6 +152,7 @@ class RequestCommand extends HyperfCommand
 			}
 			unset($constants);
 		} catch (Throwable $e) {
+			var_dump($e);
 			echo "【{$fileName}】常量：引用外部包，无法生成，请手动填写" . PHP_EOL;
 		}
 
@@ -162,15 +163,24 @@ class RequestCommand extends HyperfCommand
 		foreach ($methods ?? [] as $method) {
 			$methodName = $method->getName();
 			try {
-				$res = $method->invoke($obj);
+				if($method->getNumberOfRequiredParameters()) {
+					$params = [];
+					foreach ($method->getParameters() as $parameter) {
+						$params[] = 1;		// 设定调用参数
+					}
+					$res = $method->invokeArgs($obj, $params);
+				} else {
+					$res = $method->invoke($obj);
+				}
 			} catch (Throwable $e) {
+				var_dump($e->getMessage());
 				echo "【{$fileName}】函数：" . $methodName . "引用外部包，无法生成，请手动填写" . PHP_EOL;
 				continue;
 			}
 			$constants[$methodName] = $res;
 		}
 		foreach ($constants ?? [] as $constKey => $const) {
-			$isMatched       = preg_match_all('/' . $constKey . '\(\).*?];/', $content, $matches);
+			$isMatched       = preg_match_all('/' . $constKey . '\(.*?];/', $content, $matches);
 			$ruleStr         = str_replace("\"", "'", $matches[0][0]);      // 统一转单引号
 			$strArr          = explode(self::Split_Str, $ruleStr);
 			$remarks         = self::decodeRemark($const, $strArr);
