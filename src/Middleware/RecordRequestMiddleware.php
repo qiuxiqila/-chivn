@@ -52,7 +52,6 @@ class RecordRequestMiddleware implements MiddlewareInterface
 		Context::set('http_start_time', $start_time);
 		Context::set('http_route', $http_route);
 		context::set('http_use_memory', memory_get_usage());
-		print_r($this->request->all());
 		context::set('http_params', $this->request->all());
 		$response = $handler->handle($request);
 		self::writeLog();
