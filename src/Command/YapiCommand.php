@@ -82,7 +82,7 @@ class YapiCommand extends HyperfCommand
 				// key以_at结尾，默认为时间格式
 				if (strpos($dKey, '_at') !== false) {
 					$type        = 'string';
-					$description .= '[格式：Y-m-d H:i:s]';
+					$description .= '[格式：Y/m/d H:i:s]';
 				}
 				$properties[$dKey] = [
 					'type'        => $type,
