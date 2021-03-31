@@ -80,9 +80,9 @@ class YapiCommand extends HyperfCommand
 						break;
 				}
 				// key以_at结尾，默认为时间格式
-				if (strpos($dKey, '_at') !== false) {
+				if (substr($dKey, -3) == '_at') {
 					$type        = 'string';
-					$description .= '[格式：Y/m/d H:i:s]';
+					$description .= '[格式：Y-m-d H:i:s]';
 				}
 				$properties[$dKey] = [
 					'type'        => $type,
@@ -90,8 +90,8 @@ class YapiCommand extends HyperfCommand
 				];
 
 				// key以x_id结尾，默认加上x_name字段
-				if (strpos($dKey, '_id') !== false) {
-					$_name              = substr($dKey, 0, strlen($dKey) - 3) . 'name';
+				if (substr($dKey, -3) == '_id') {
+					$_name              = substr($dKey, 0, strlen($dKey) - 3) . '_name';
 					$properties[$_name] = [
 						'type'        => 'string',
 						'description' => $description . '[对应名称]',
